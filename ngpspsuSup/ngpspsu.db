@@ -1,0 +1,28 @@
+record(bo, "$(P)DISABLE"){
+    field(DESC, "Disable comms")
+    field(PINI, "YES")
+    field(VAL, "$(DISABLE=0)")
+    field(OMSL, "supervisory")
+    field(ZNAM, "COMMS ENABLED")
+    field(ONAM, "COMMS DISABLED")
+}
+
+record (stringin, "$(P)VERSION"){
+	field(DESC, "Model number and firmware version")
+    field(DTYP, "stream")
+	field(INP,  "@ngpspsu.proto get_version $(PORT)")
+	
+	field(SDIS, "$(P)DISABLE")
+}
+
+record (bi, "$(P)ON:SP") {
+    field(DESC, "Turns on the module")
+    field(DTYP, "stream")
+    field(INP,  "@ngpspsu.proto turn_on_module $(PORT)")
+    
+    field(ZNAM, "")
+    field(ONAM, "On")
+    
+    info(INTEREST, "HIGH")
+    field(SDIS, "$(P)DISABLE")
+}

@@ -1,0 +1,14 @@
+# Protocol file for the NGPS power supply unit
+
+InTerminator = CR; # Can also be CR LF
+OutTerminator = CR LF;
+
+get_version {
+	out "VER";
+	in "\#VER:%39c";
+}
+
+turn_on_module {
+    out "MON";
+    in "%{|\#AK}";
+}
