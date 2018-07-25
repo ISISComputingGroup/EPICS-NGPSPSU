@@ -15,13 +15,25 @@ record (stringin, "$(P)VERSION"){
 	field(SDIS, "$(P)DISABLE")
 }
 
-record (bi, "$(P)ON:SP") {
+record (bo, "$(P)ON:SP") {
     field(DESC, "Turns on the module")
     field(DTYP, "stream")
-    field(INP,  "@ngpspsu.proto turn_on_module $(PORT)")
+    field(OUT,  "@ngpspsu.proto turn_on_module $(PORT)")
     
     field(ZNAM, "")
     field(ONAM, "On")
+    
+    info(INTEREST, "HIGH")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record (bo, "$(P)OFF:SP") {
+    field(DESC, "Turns off the module")
+    field(DTYP, "stream")
+    field(OUT,  "@ngpspsu.proto turn_off_module $(PORT)")
+    
+    field(ZNAM, "")
+    field(ONAM, "Off")
     
     info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")

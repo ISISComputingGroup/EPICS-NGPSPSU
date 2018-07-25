@@ -12,3 +12,8 @@ turn_on_module {
     out "MON";
     in "%{|\#AK}";
 }
+
+turn_off_module {
+    out "MOFF";
+    in "%{|\#AK}";
+}
