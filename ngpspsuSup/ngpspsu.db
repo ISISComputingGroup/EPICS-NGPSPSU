@@ -17,21 +17,32 @@ record (stringin, "$(P)VERSION"){
 
 # ON/OFF records
 
-record (bo, "$(P)START") {
-    field(DESC, "Turns on the module")
-    field(DTYP, "stream")
-    field(OUT,  "@ngpspsu.proto start($(P)) $(PORT)")
+record (bo, "$(P)ON_OFF:SP"){
+    field(DESC, "Setpoint to turn module on or off")
+    field(DTYP, "Soft Channel")
+    field(FLNK, "$(P)ON_OFF:SP:_SEND_IF_OK")
     
-    info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
+    info(archive, "VAL")
 }
 
-record (bo, "$(P)STOP") {
-    field(DESC, "Turns off the module")
+record (calcout, "$(P)ON_OFF:SP:_SEND_IF_OK"){
+    field(INPA, "$(P)ON_OFF:SP")
+    field(INPB, "$(P)STAT:ON_OFF")
+	
+    field(CALC, "A!=B") # Prevents resending a setpoint if that setpoint was already set.
+	field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "A")
+	field(OUT, "$(P)ON_OFF:SP:RAW CA PP")
+}
+
+record (bo, "$(P)ON_OFF:SP:RAW"){
+    field(DESC, "Raw setpoint to turn module on or off")
     field(DTYP, "stream")
-    field(OUT,  "@ngpspsu.proto stop($(P)) $(PORT)")
+    field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
     
-    info(INTEREST, "HIGH")
+	info(archive, "VAL")
     field(SDIS, "$(P)DISABLE")
 }
 

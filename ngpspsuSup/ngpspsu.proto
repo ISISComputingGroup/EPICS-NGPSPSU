@@ -12,7 +12,7 @@ error_mismatch_catcher {
 	in "\#NAK:%(\$1ERROR)2c";
 }
 
-# Normal functions
+# Functions to read from, or send to, the device
 
 get_version {
 	out "VER";
@@ -20,14 +20,8 @@ get_version {
     @mismatch { error_mismatch_catcher; }
 }
 
-start {
-    out "MON";
-    in "\#AK";
-    @mismatch { error_mismatch_catcher; }
-}
-
-stop {
-    out "MOFF";
+turn_on_or_off {
+    out "%{MOFF|MON}";
     in "\#AK";
     @mismatch { error_mismatch_catcher; }
 }
