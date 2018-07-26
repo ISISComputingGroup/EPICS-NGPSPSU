@@ -1,19 +1,32 @@
 # Protocol file for the NGPS power supply unit
+# (\$1PVNAME) = redirects output to the given record
 
-InTerminator = CR; # Can also be CR LF
-OutTerminator = CR LF;
+InTerminator = CR LF; 
+OutTerminator = CR; # Can also be CR LF
 
 get_version {
 	out "VER";
 	in "\#VER:%39c";
 }
 
-turn_on_module {
+start {
     out "MON";
-    in "%{|\#AK}";
+    in "\#AK";
 }
 
-turn_off_module {
+stop {
     out "MOFF";
-    in "%{|\#AK}";
+    in "\#AK";
+}
+
+read_status {
+    out "MST";
+    in "\#MST:%(\$1STAT:HEX:1:RAW.A)1x"
+        "%(\$1STAT:HEX:2:RAW.A)1x"
+        "%(\$1STAT:HEX:3:RAW.A)1x"
+        "%(\$1STAT:HEX:4:RAW.A)1x"
+        "%(\$1STAT:HEX:5:RAW.A)1x"
+        "%(\$1STAT:HEX:6:RAW.A)1x"
+        "%(\$1STAT:HEX:7:RAW.A)1x"
+        "%(\$1STAT:HEX:8:RAW.A)1x";
 }

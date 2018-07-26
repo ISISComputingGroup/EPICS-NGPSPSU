@@ -4,6 +4,7 @@ include $(TOP)/configure/CONFIG
 
 # Install .dbd and .db files
 DB += ngpspsu.db
+DB += status_hex.db
 
 #protocol files
 DATA += ngpspsu.proto
