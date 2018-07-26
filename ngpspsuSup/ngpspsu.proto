@@ -1,22 +1,35 @@
-# Protocol file for the NGPS power supply unit
-# (\$1PVNAME) = redirects output to the given record
+#   Protocol file for the NGPS power supply unit
+#
+#   (\$1PVNAME) = redirects output to the given record
+#   
 
 InTerminator = CR LF; 
 OutTerminator = CR; # Can also be CR LF
 
+# Mismatch error handler
+
+error_mismatch_catcher {
+	in "\#NAK:%(\$1ERROR)2c";
+}
+
+# Normal functions
+
 get_version {
 	out "VER";
 	in "\#VER:%39c";
+    @mismatch { error_mismatch_catcher; }
 }
 
 start {
     out "MON";
     in "\#AK";
+    @mismatch { error_mismatch_catcher; }
 }
 
 stop {
     out "MOFF";
     in "\#AK";
+    @mismatch { error_mismatch_catcher; }
 }
 
 read_status {

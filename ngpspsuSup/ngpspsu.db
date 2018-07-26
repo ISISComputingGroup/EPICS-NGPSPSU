@@ -10,7 +10,7 @@ record(bo, "$(P)DISABLE"){
 record (stringin, "$(P)VERSION"){
 	field(DESC, "Model number and firmware version")
     field(DTYP, "stream")
-	field(INP,  "@ngpspsu.proto get_version $(PORT)")
+	field(INP,  "@ngpspsu.proto get_version($(P)) $(PORT)")
 	
 	field(SDIS, "$(P)DISABLE")
 }
@@ -20,7 +20,7 @@ record (stringin, "$(P)VERSION"){
 record (bo, "$(P)START") {
     field(DESC, "Turns on the module")
     field(DTYP, "stream")
-    field(OUT,  "@ngpspsu.proto start $(PORT)")
+    field(OUT,  "@ngpspsu.proto start($(P)) $(PORT)")
     
     info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
@@ -29,7 +29,7 @@ record (bo, "$(P)START") {
 record (bo, "$(P)STOP") {
     field(DESC, "Turns off the module")
     field(DTYP, "stream")
-    field(OUT,  "@ngpspsu.proto stop $(PORT)")
+    field(OUT,  "@ngpspsu.proto stop($(P)) $(PORT)")
     
     info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
@@ -46,7 +46,7 @@ record(bo, "$(P)READ:STAT"){
 }
 
 record(bi, "$(P)STAT:ON_OFF") {
-	field(DESC, "Status of whether the device is on or off")
+	field(DESC, "On/off status")
 	field(INP, "$(P)STAT:HEX:1.B0 CP MS")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
@@ -60,4 +60,17 @@ record(bi, "$(P)STAT:ON_OFF") {
 # All Status Hex character PVs can be found in status_hex.db
 #
 
+# Error records
 
+record(stringin, "$(P)ERROR") {
+	field(DESC, "Catches error codes.")
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive") # Only triggered by mismatch handler
+    field(PINI, "YES")
+    field(VAL, "0")
+    
+    
+	info(ARCHIVE, "VAL")
+	info(INTEREST, "HIGH")
+    field(SDIS, "$(P)DISABLE")
+}
