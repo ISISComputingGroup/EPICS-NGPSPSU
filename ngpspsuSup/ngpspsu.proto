@@ -32,6 +32,28 @@ reset {
     @mismatch { error_mismatch_catcher; }
 }
 
+## Voltage commands
+
+read_voltage {
+    out "MRV";
+    in "\#MRV:%f";
+    @mismatch { error_mismatch_catcher; }
+}
+
+set_voltage_setpoint {
+    out "MWV:%f";
+    in "\#AK";
+    @mismatch { error_mismatch_catcher; }
+}
+
+read_voltage_setpoint {
+    out "MWV:?";
+    in "\#MWV:%f";
+    @mismatch { error_mismatch_catcher; }
+}
+
+
+
 read_status {
     out "MST";
     in "\#MST:%(\$1STAT:HEX:1:RAW.A)1x"

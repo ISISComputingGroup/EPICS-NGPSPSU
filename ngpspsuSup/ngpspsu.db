@@ -1,3 +1,5 @@
+### Records for NGPS PSU IOC ###
+
 record(bo, "$(P)DISABLE"){
     field(DESC, "Disable comms")
     field(PINI, "YES")
