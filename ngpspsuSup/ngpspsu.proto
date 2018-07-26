@@ -26,6 +26,12 @@ turn_on_or_off {
     @mismatch { error_mismatch_catcher; }
 }
 
+reset {
+    out "MRESET";
+    in "\#AK";
+    @mismatch { error_mismatch_catcher; }
+}
+
 read_status {
     out "MST";
     in "\#MST:%(\$1STAT:HEX:1:RAW.A)1x"

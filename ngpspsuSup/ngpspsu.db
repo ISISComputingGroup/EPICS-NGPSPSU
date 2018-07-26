@@ -46,6 +46,17 @@ record (bo, "$(P)ON_OFF:SP:RAW"){
     field(SDIS, "$(P)DISABLE")
 }
 
+# Reset the device
+
+record (bo, "$(P)RESET:SP"){
+    field(DESC, "Resets the device")
+    field(DTYP, "stream")
+    field(OUT,  "@ngpspsu.proto reset($(P)) $(PORT)")
+    
+    info(archive, "VAL")
+    field(SDIS, "$(P)DISABLE")
+}
+
 # Status records  
 
 record(bo, "$(P)READ:STAT"){
