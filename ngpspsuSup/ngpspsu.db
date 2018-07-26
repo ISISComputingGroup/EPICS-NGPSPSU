@@ -59,10 +59,10 @@ record (bo, "$(P)RESET:SP"){
 
 # Status records  
 
-record(bo, "$(P)READ:STAT"){
+record(stringin, "$(P)READ:STAT"){
     field(DESC, "Reads the status of the device.")
     field(SCAN, "1 second")
-    field(OUT, "@ngpspsu.proto read_status($(P)) $(PORT)")
+    field(INP, "@ngpspsu.proto read_status($(P)) $(PORT)")
     field(DTYP, "stream")
     field(SDIS, "$(P)DISABLE")
 }
