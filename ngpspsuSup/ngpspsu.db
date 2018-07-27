@@ -45,10 +45,7 @@ record (bo, "$(P)ON_OFF:SP:RAW"){
     field(DESC, "Raw setpoint to turn module on or off")
     field(DTYP, "stream")
     field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
-    
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:ON_OFF:SP:RAW")
-    
+      
 	info(archive, "VAL")
     field(SDIS, "$(P)DISABLE")
 }
@@ -80,9 +77,6 @@ record(bi, "$(P)STAT:ON_OFF") {
 	field(INP, "$(P)STAT:HEX:1.B0 CP MS")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
-    
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:STAT:ON_OFF")
     
 	info(ARCHIVE, "VAL")
 	info(INTEREST, "HIGH")
@@ -124,17 +118,4 @@ record(stringout, "$(P)SIM:VERSION")
 {
 	field(VAL, "NGPS 100-50:0.9.01")
 	field(PINI, "YES")
-}
-
-record(bo, "$(P)SIM:ON_OFF:SP:RAW") 
-{
-    field(SCAN, "Passive")
-    field(DTYP, "Soft Channel") 
-}
-
-record(bi, "$(P)SIM:STAT:ON_OFF") 
-{
-    field(SCAN, "Passive")
-    field(DTYP, "Soft Channel")
-    field(INP, "$(P)ON_OFF:SP:RAW")
 }
