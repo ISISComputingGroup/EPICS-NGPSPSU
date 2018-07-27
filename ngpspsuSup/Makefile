@@ -5,8 +5,7 @@ include $(TOP)/configure/CONFIG
 # Install .dbd and .db files
 DB += ngpspsu.db
 DB += status_hex.db
-DB += voltage.db
-DB += current.db
+DB += current_and_voltage.db
 
 #protocol files
 DATA += ngpspsu.proto

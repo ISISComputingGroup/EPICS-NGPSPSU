@@ -5,7 +5,7 @@ record (calcout, "$(P)STAT:HEX:$(INDEX):RAW"){
 
 record(mbbiDirect, "$(P)STAT:HEX:$(INDEX)") {
     field(DESC, "Gets hexadecimal character number $(INDEX)")
-    field(DTYP, "Raw Soft Channel")
+    field(DTYP, "Soft Channel")
     field(INP, "$(P)STAT:HEX:$(INDEX):RAW.A CP MS")
     field(NOBT, "4")
 	

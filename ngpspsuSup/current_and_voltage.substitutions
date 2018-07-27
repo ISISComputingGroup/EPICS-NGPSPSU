@@ -1,0 +1,6 @@
+file status_hex.template {
+
+pattern {P, PORT, RNAME, TITLE_NAME, LOWER_NAME, UNITS}
+{"\$(P)", \$(PORT), "VOLT", "Voltage", "voltage", "Volts" }
+{"\$(P)", \$(PORT), "CURR", "Current", "current", "Amps" }
+}

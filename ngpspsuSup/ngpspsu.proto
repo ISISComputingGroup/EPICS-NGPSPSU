@@ -14,12 +14,6 @@ error_mismatch_catcher {
 
 # Functions to read from, or send to, the device
 
-get_version {
-	out "VER";
-	in "\#VER:%39c";
-    @mismatch { error_mismatch_catcher; }
-}
-
 turn_on_or_off {
     out "%{MOFF|MON}";
     in "\#AK";
@@ -32,7 +26,7 @@ reset {
     @mismatch { error_mismatch_catcher; }
 }
 
-## Voltage commands
+## Voltage and Current commands
 
 read_voltage {
     out "MRV";
@@ -52,7 +46,25 @@ read_voltage_setpoint {
     @mismatch { error_mismatch_catcher; }
 }
 
+read_current {
+    out "MRI";
+    in "\#MRI:%f";
+    @mismatch { error_mismatch_catcher; }
+}
 
+set_current_setpoint {
+    out "MWI:%f";
+    in "\#AK";
+    @mismatch { error_mismatch_catcher; }
+}
+
+read_current_setpoint {
+    out "MWI:?";
+    in "\#MWI:%f";
+    @mismatch { error_mismatch_catcher; }
+}
+
+## Read status commands
 
 read_status {
     out "MST";
@@ -64,4 +76,10 @@ read_status {
         "%(\$1STAT:HEX:6:RAW.A)1x"
         "%(\$1STAT:HEX:7:RAW.A)1x"
         "%(\$1STAT:HEX:8:RAW.A)1x";
+}
+
+get_version {
+	out "VER";
+	in "\#VER:%39c";
+    @mismatch { error_mismatch_catcher; }
 }
