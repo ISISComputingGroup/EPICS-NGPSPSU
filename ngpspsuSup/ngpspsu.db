@@ -14,6 +14,8 @@ record (stringin, "$(P)VERSION"){
     field(DTYP, "stream")
 	field(INP,  "@ngpspsu.proto get_version($(P)) $(PORT)")
 	
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VERSION")
 	field(SDIS, "$(P)DISABLE")
 }
 
@@ -23,7 +25,7 @@ record (bo, "$(P)ON_OFF:SP"){
     field(DESC, "Setpoint to turn module on or off")
     field(DTYP, "Soft Channel")
     field(FLNK, "$(P)ON_OFF:SP:_SEND_IF_OK")
-    
+      
     field(SDIS, "$(P)DISABLE")
     info(archive, "VAL")
 }
@@ -43,6 +45,9 @@ record (bo, "$(P)ON_OFF:SP:RAW"){
     field(DESC, "Raw setpoint to turn module on or off")
     field(DTYP, "stream")
     field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ON_OFF:SP:RAW")
     
 	info(archive, "VAL")
     field(SDIS, "$(P)DISABLE")
@@ -66,6 +71,7 @@ record(stringin, "$(P)READ:STAT"){
     field(SCAN, "1 second")
     field(INP, "@ngpspsu.proto read_status($(P)) $(PORT)")
     field(DTYP, "stream")
+      
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -75,8 +81,11 @@ record(bi, "$(P)STAT:ON_OFF") {
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
     
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STAT:ON_OFF")
+    
 	info(ARCHIVE, "VAL")
-	info(INTEREST, "MEDIUM")
+	info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -91,10 +100,41 @@ record(stringin, "$(P)ERROR") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive") # Only triggered by mismatch handler
     field(PINI, "YES")
-    field(VAL, "0")
+    field(VAL, "")
     
     
 	info(ARCHIVE, "VAL")
 	info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
+}
+
+### Simulated records
+
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
+record(stringout, "$(P)SIM:VERSION")
+{
+	field(VAL, "NGPS 100-50:0.9.01")
+	field(PINI, "YES")
+}
+
+record(bo, "$(P)SIM:ON_OFF:SP:RAW") 
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel") 
+}
+
+record(bi, "$(P)SIM:STAT:ON_OFF") 
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(INP, "$(P)ON_OFF:SP:RAW")
 }

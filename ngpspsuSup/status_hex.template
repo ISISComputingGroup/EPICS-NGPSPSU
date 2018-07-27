@@ -8,6 +8,8 @@ record(mbbiDirect, "$(P)STAT:HEX:$(INDEX)") {
     field(DTYP, "Soft Channel")
     field(INP, "$(P)STAT:HEX:$(INDEX):RAW.A CP MS")
     field(NOBT, "4")
+    
+    field(SIML, "$(P)SIM")
 	
     info(INTEREST, "HIGH")
 	info(ARCHIVE, "VAL")

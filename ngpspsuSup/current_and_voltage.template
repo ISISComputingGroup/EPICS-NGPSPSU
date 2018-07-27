@@ -6,6 +6,9 @@ record (ai, "$(P)$(RNAME)"){
     field(PREC, "6")
     field(EGU, "$(UNITS)")
     
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:$(RNAME)")
+        
     info(ARCHIVE, "VAL")
 	info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
@@ -17,6 +20,9 @@ record (ao, "$(P)$(RNAME):SP"){
     field(OUT, "@ngpspsu.proto set_$(LOWER_NAME)_setpoint($(P)) $(PORT)")
     field(PREC, "6")
     field(EGU, "$(UNITS)")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:$(RNAME):SP")
     
     info(ARCHIVE, "VAL")
 	info(INTEREST, "HIGH")
@@ -31,8 +37,21 @@ record (ai, "$(P)$(RNAME):SP:RBV"){
     field(PREC, "6")
     field(EGU, "$(UNITS)")
     
+   	field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:$(RNAME):SP:RBV")
+    
     info(ARCHIVE, "VAL")
 	info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
 }
+
+record(ao, "$(P)SIM:$(RNAME)") 
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+alias("$(P)SIM:$(RNAME)","$(P)SIM:$(RNAME):SP")
+
+alias("$(P)SIM:$(RNAME)","$(P)SIM:$(RNAME):SP:RBV")
 
