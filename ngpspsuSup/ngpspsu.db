@@ -87,6 +87,24 @@ record(bi, "$(P)STAT:ON_OFF") {
 # All Status Hex character PVs can be found in status_hex.db
 #
 
+# Fault records
+
+record(bi, "$(P)STAT:FAULT") {
+	field(DESC, "Fault status")
+    field(DTYP, "Soft Record")
+	field(INP, "$(P)STAT:HEX:1.B1 CP MS")
+	
+    field(ZNAM, "No fault")
+	field(ZSV, "NO_ALARM")
+    
+    field(ONAM, "Fault")
+    field(OSV, "MAJOR")
+    
+	info(ARCHIVE, "VAL")
+	info(INTEREST, "HIGH")
+    field(SDIS, "$(P)DISABLE")
+}
+
 # Error records
 
 record(stringin, "$(P)ERROR") {
