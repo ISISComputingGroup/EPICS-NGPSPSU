@@ -89,10 +89,23 @@ record(bi, "$(P)STAT:ON_OFF") {
 
 # Fault records
 
+record(calcout, "$(P)STAT:FAULT:_CALC") {
+    field(DESC, "Calculates if there's a fault")
+    field(INPA, "$(P)STAT:HEX:1.B1 CP MS")
+    field(INPB, "$(P)STAT:HEX:6.B1 CP MS")
+    field(INPC, "$(P)STAT:HEX:6.B2 CP MS")
+    field(INPD, "$(P)STAT:HEX:6.B3 CP MS")
+    field(INPE, "$(P)STAT:HEX:7.B0 CP MS")
+    field(INPF, "$(P)STAT:HEX:8.B2 CP MS")
+    field(CALC, "A||B||C||D||E||F")
+    field(OOPT, "On Change")
+}
+
+
 record(bi, "$(P)STAT:FAULT") {
 	field(DESC, "Fault status")
-    field(DTYP, "Soft Record")
-	field(INP, "$(P)STAT:HEX:1.B1 CP MS")
+    field(DTYP, "Soft Channel")
+    field(INP, "$(P)STAT:FAULT:_CALC CP MS")
 	
     field(ZNAM, "No fault")
 	field(ZSV, "NO_ALARM")
@@ -101,7 +114,7 @@ record(bi, "$(P)STAT:FAULT") {
     field(OSV, "MAJOR")
     
 	info(ARCHIVE, "VAL")
-	info(INTEREST, "HIGH")
+	info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")
 }
 
