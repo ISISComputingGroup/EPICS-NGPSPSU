@@ -142,13 +142,12 @@ record(bi, "$(P)STAT:FAULT") {
 record(stringin, "$(P)ERROR") {
 	field(DESC, "Catches error codes.")
     field(DTYP, "Soft Channel")
-    field(SCAN, "Passive") # Only triggered by mismatch handler
+    field(SCAN, ".1 second") # Not processed by mismatch handler (uses redirection)
     field(PINI, "YES")
     field(VAL, "")
-    
-    
+        
 	info(ARCHIVE, "VAL")
-	info(INTEREST, "HIGH")
+	info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")
 }
 

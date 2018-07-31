@@ -9,7 +9,7 @@ OutTerminator = CR; # Can also be CR LF
 # Mismatch error handler
 
 error_mismatch_catcher {
-	in "\#NAK:%(\$1ERROR)2c";
+	in "\#NAK:%(\$1ERROR.VAL)2c";
 }
 
 # Functions to read from, or send to, the device
