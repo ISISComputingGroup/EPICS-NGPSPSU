@@ -26,6 +26,12 @@ reset {
     @mismatch { error_mismatch_catcher; }
 }
 
+get_version {
+	out "VER";
+	in "\#VER:%39c";
+    @mismatch { error_mismatch_catcher; }
+}
+
 ## Voltage and Current commands
 
 read_voltage {
@@ -76,10 +82,4 @@ read_status {
         "%(\$1STAT:HEX:6:RAW.A)1x"
         "%(\$1STAT:HEX:7:RAW.A)1x"
         "%(\$1STAT:HEX:8:RAW.A)1x";
-}
-
-get_version {
-	out "VER";
-	in "\#VER:%39c";
-    @mismatch { error_mismatch_catcher; }
 }

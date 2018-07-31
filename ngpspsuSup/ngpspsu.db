@@ -1,4 +1,9 @@
+################################
 ### Records for NGPS PSU IOC ###
+################################
+
+
+# Misc Records
 
 record(bo, "$(P)DISABLE"){
     field(DESC, "Disable comms")
@@ -26,11 +31,14 @@ record (bo, "$(P)ON_OFF:SP"){
     field(DTYP, "Soft Channel")
     field(FLNK, "$(P)ON_OFF:SP:_SEND_IF_OK")
       
-    field(SDIS, "$(P)DISABLE")
     info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    
+    field(SDIS, "$(P)DISABLE")
 }
 
 record (calcout, "$(P)ON_OFF:SP:_SEND_IF_OK"){
+    field(DESC, "Checks if it's OK to send.")
     field(INPA, "$(P)ON_OFF:SP")
     field(INPB, "$(P)STAT:ON_OFF")
 	
@@ -46,7 +54,9 @@ record (bo, "$(P)ON_OFF:SP:RAW"){
     field(DTYP, "stream")
     field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
       
-	info(archive, "VAL")
+    info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -59,6 +69,8 @@ record (bo, "$(P)RESET:SP"){
     field(FLNK, "$(P)_COPIER")
     
     info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -134,6 +146,7 @@ record(bi, "$(P)STAT:FAULT") {
     
 	info(ARCHIVE, "VAL")
 	info(INTEREST, "MEDIUM")
+    info(ALARM, "NGPSPSU")
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -148,6 +161,7 @@ record(stringin, "$(P)ERROR") {
         
 	info(ARCHIVE, "VAL")
 	info(INTEREST, "MEDIUM")
+    
     field(SDIS, "$(P)DISABLE")
 }
 
