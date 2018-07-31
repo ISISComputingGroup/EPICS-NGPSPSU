@@ -50,15 +50,34 @@ record (bo, "$(P)ON_OFF:SP:RAW"){
     field(SDIS, "$(P)DISABLE")
 }
 
-# Reset the device
+# Reset records
 
 record (bo, "$(P)RESET:SP"){
     field(DESC, "Resets the device")
     field(DTYP, "stream")
     field(OUT,  "@ngpspsu.proto reset($(P)) $(PORT)")
+    field(FLNK, "$(P)_COPIER")
     
     info(archive, "VAL")
     field(SDIS, "$(P)DISABLE")
+}
+
+## These records copy an empty string to the ERROR PV
+## when reset is activated.
+
+record(scalcout, "$(P)_COPIER"){
+    field(DESC, "Copies string to ERROR PV")
+    field(INAA, "$(P)_EMPTY")
+    field(CALC, "AA")
+    field(OOPT, "Every Time")
+    field(OUT, "$(P)ERROR")
+}
+
+record(stringout, "$(P)_EMPTY"){
+    field(DESC, "Empty string to be copied")
+    field(DTYP, "Soft Channel")
+    field(PINI, "YES")
+    field(VAL, "")   
 }
 
 # Status records  
