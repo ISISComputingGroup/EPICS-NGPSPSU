@@ -24,7 +24,7 @@ record (stringin, "$(P)VERSION"){
 	field(SDIS, "$(P)DISABLE")
 }
 
-# ON/OFF records
+# Power records
 
 record (bo, "$(P)POWER:SP"){
     field(DESC, "Power setpoint")
