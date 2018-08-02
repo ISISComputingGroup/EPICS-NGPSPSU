@@ -1,6 +1,6 @@
 record (calcout, "$(P)STAT:HEX:$(INDEX):RAW"){
     field(DESC, "RAW hexadecimal char number $(INDEX)")
-    field(INPB, "$(P)READ:STAT CP MS")
+    field(INPB, "$(P)STAT CP MS")
     field(CALC, "A")
 }
 
