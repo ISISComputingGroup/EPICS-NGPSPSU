@@ -89,7 +89,7 @@ record(stringout, "$(P)_EMPTY"){
     field(DESC, "Empty string to be copied")
     field(DTYP, "Soft Channel")
     field(PINI, "YES")
-    field(VAL, "")   
+    field(VAL, "No error")   
 }
 
 # Status records  
@@ -157,7 +157,7 @@ record(stringin, "$(P)ERROR") {
     field(DTYP, "Soft Channel")
     field(SCAN, ".1 second") # Not processed by mismatch handler (uses redirection)
     field(PINI, "YES")
-    field(VAL, "")
+    field(VAL, "No error")
         
 	info(ARCHIVE, "VAL")
 	info(INTEREST, "MEDIUM")
