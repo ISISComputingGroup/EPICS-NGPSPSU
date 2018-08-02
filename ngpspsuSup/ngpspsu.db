@@ -26,19 +26,17 @@ record (stringin, "$(P)VERSION"){
 
 # ON/OFF records
 
-record (bo, "$(P)ON_OFF:SP"){
-    field(DESC, "Setpoint to turn module on or off")
+record (bo, "$(P)POWER:SP"){
+    field(DESC, "Power setpoint")
     field(DTYP, "Soft Channel")
     field(FLNK, "$(P)ON_OFF:SP:_SEND_IF_OK")
       
-    info(archive, "VAL")
     info(INTEREST, "MEDIUM")
-    
     field(SDIS, "$(P)DISABLE")
 }
 
-record (calcout, "$(P)ON_OFF:SP:_SEND_IF_OK"){
-    field(DESC, "Checks if it's OK to send.")
+record (calcout, "$(P)POWER:SP:_SEND_IF_OK"){
+    field(DESC, "Checks if power is on or off")
     field(INPA, "$(P)ON_OFF:SP")
     field(INPB, "$(P)STAT:ON_OFF")
 	
@@ -49,14 +47,12 @@ record (calcout, "$(P)ON_OFF:SP:_SEND_IF_OK"){
 	field(OUT, "$(P)ON_OFF:SP:RAW CA PP")
 }
 
-record (bo, "$(P)ON_OFF:SP:RAW"){
+record (bo, "$(P)POWER:SP:RAW"){
     field(DESC, "Raw setpoint to turn module on or off")
     field(DTYP, "stream")
     field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
       
-    info(archive, "VAL")
     info(INTEREST, "MEDIUM")
-    
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -94,7 +90,7 @@ record(stringout, "$(P)_EMPTY"){
 
 # Status records  
 
-record(stringin, "$(P)READ:STAT"){
+record(stringin, "$(P)STAT"){
     field(DESC, "Reads the status of the device.")
     field(SCAN, "1 second")
     field(INP, "@ngpspsu.proto read_status($(P)) $(PORT)")
@@ -103,14 +99,13 @@ record(stringin, "$(P)READ:STAT"){
     field(SDIS, "$(P)DISABLE")
 }
 
-record(bi, "$(P)STAT:ON_OFF") {
-	field(DESC, "On/off status")
+record(bi, "$(P)STAT:POWER") {
+	field(DESC, "Power status")
 	field(INP, "$(P)STAT:HEX:1.B0 CP MS")
 	field(ZNAM, "OFF")
 	field(ONAM, "ON")
     
-	info(ARCHIVE, "VAL")
-	info(INTEREST, "HIGH")
+	info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -144,8 +139,7 @@ record(bi, "$(P)STAT:FAULT") {
     field(ONAM, "Fault")
     field(OSV, "MAJOR")
     
-	info(ARCHIVE, "VAL")
-	info(INTEREST, "MEDIUM")
+	info(INTEREST, "LOW")
     info(ALARM, "NGPSPSU")
     field(SDIS, "$(P)DISABLE")
 }
@@ -159,9 +153,8 @@ record(stringin, "$(P)ERROR") {
     field(PINI, "YES")
     field(VAL, "No error")
         
-	info(ARCHIVE, "VAL")
-	info(INTEREST, "MEDIUM")
-    
+	info(INTEREST, "LOW")
+    info(ALARM, "NGPSPSU")
     field(SDIS, "$(P)DISABLE")
 }
 
