@@ -30,6 +30,9 @@ record (bo, "$(P)POWER:SP"){
     field(DESC, "Power setpoint")
     field(DTYP, "Soft Channel")
     field(FLNK, "$(P)POWER:SP:_SEND_IF_OK")
+    
+    field(ZNAM, "OFF")
+	field(ONAM, "ON")
       
     info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")
