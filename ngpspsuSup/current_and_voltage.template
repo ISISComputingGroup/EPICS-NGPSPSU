@@ -24,8 +24,6 @@ record (ao, "$(P)$(RNAME):SP"){
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:$(RNAME):SP")
     
-    info(ARCHIVE, "VAL")
-	info(INTEREST, "HIGH")
     field(SDIS, "$(P)DISABLE")
 }
 
@@ -40,8 +38,7 @@ record (ai, "$(P)$(RNAME):SP:RBV"){
    	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:$(RNAME):SP:RBV")
     
-    info(ARCHIVE, "VAL")
-	info(INTEREST, "HIGH")
+	info(INTEREST, "LOW")
     field(SDIS, "$(P)DISABLE")
 }
 
