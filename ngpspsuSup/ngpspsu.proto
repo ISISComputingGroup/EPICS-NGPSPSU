@@ -4,7 +4,7 @@
 #   
 
 InTerminator = CR LF; 
-OutTerminator = CR; # Can also be CR LF
+## OutTerminator set in st.cmd
 
 # Mismatch error handler
 
