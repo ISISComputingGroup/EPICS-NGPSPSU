@@ -29,7 +29,7 @@ record (stringin, "$(P)VERSION"){
 record (bo, "$(P)POWER:SP"){
     field(DESC, "Power setpoint")
     field(DTYP, "Soft Channel")
-    field(FLNK, "$(P)ON_OFF:SP:_SEND_IF_OK")
+    field(FLNK, "$(P)POWER:SP:_SEND_IF_OK")
       
     info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")
@@ -37,20 +37,20 @@ record (bo, "$(P)POWER:SP"){
 
 record (calcout, "$(P)POWER:SP:_SEND_IF_OK"){
     field(DESC, "Checks if power is on or off")
-    field(INPA, "$(P)ON_OFF:SP")
-    field(INPB, "$(P)STAT:ON_OFF")
+    field(INPA, "$(P)POWER:SP")
+    field(INPB, "$(P)STAT:POWER")
 	
     field(CALC, "A!=B") # Prevents resending a setpoint if that setpoint was already set.
 	field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
     field(OCAL, "A")
-	field(OUT, "$(P)ON_OFF:SP:RAW CA PP")
+	field(OUT, "$(P)POWER:SP:RAW CA PP")
 }
 
 record (bo, "$(P)POWER:SP:RAW"){
-    field(DESC, "Raw setpoint to turn module on or off")
+    field(DESC, "Raw power setpoint")
     field(DTYP, "stream")
-    field(OUT,  "@ngpspsu.proto turn_on_or_off($(P)) $(PORT)")
+    field(OUT,  "@ngpspsu.proto power($(P)) $(PORT)")
       
     info(INTEREST, "MEDIUM")
     field(SDIS, "$(P)DISABLE")

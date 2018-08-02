@@ -14,7 +14,7 @@ error_mismatch_catcher {
 
 # Functions to read from, or send to, the device
 
-turn_on_or_off {
+power {
     out "%{MOFF|MON}";
     in "\#AK";
     @mismatch { error_mismatch_catcher; }
