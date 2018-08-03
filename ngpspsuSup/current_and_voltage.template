@@ -38,6 +38,7 @@ record (ai, "$(P)$(RNAME):SP:RBV"){
    	field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:$(RNAME):SP:RBV")
     
+    info(archive, "VAL")
 	info(INTEREST, "LOW")
     field(SDIS, "$(P)DISABLE")
 }

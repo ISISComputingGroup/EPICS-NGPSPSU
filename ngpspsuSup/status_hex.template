@@ -23,6 +23,7 @@ record(mbbiDirect, "$(P)STAT:HEX:$(INDEX)") {
     
     field(SIML, "$(P)SIM")
 	
+    info(archive, "VAL")
     info(INTEREST, "LOW")
     field(SDIS, "$(P)DISABLE")
 }
