@@ -74,12 +74,12 @@ read_current_setpoint {
 
 read_status {
     out "MST";
-    in "\#MST:%(\$1STAT:HEX:1:RAW.A)1x"
-        "%(\$1STAT:HEX:2:RAW.A)1x"
-        "%(\$1STAT:HEX:3:RAW.A)1x"
-        "%(\$1STAT:HEX:4:RAW.A)1x"
-        "%(\$1STAT:HEX:5:RAW.A)1x"
-        "%(\$1STAT:HEX:6:RAW.A)1x"
+    in "\#MST:%(\$1STAT:HEX:8:RAW.A)1x"
         "%(\$1STAT:HEX:7:RAW.A)1x"
-        "%(\$1STAT:HEX:8:RAW.A)1x";
+        "%(\$1STAT:HEX:6:RAW.A)1x"
+        "%(\$1STAT:HEX:5:RAW.A)1x"
+        "%(\$1STAT:HEX:4:RAW.A)1x"
+        "%(\$1STAT:HEX:3:RAW.A)1x"
+        "%(\$1STAT:HEX:2:RAW.A)1x"
+        "%(\$1STAT:HEX:1:RAW.A)1x";
 }
