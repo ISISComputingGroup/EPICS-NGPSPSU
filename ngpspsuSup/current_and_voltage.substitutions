@@ -1,0 +1,6 @@
+file current_and_voltage.template {
+
+pattern {P, PORT, RNAME, TITLE_NAME, LOWER_NAME, UNITS}
+{"\$(P)", \$(PORT), "VOLT", "Voltage", "voltage", "V" }
+{"\$(P)", \$(PORT), "CURR", "Current", "current", "A" }
+}

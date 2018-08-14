@@ -1,0 +1,30 @@
+## The $(P)STAT:HEX:$(INDEX):RAW record receives the hexadecimal digit from the record redirect
+## used by the read_status command.
+
+record (calcout, "$(P)STAT:HEX:$(INDEX):RAW"){
+    field(DESC, "RAW hexadecimal char number $(INDEX)")
+    field(INPB, "$(P)STAT CP MS")
+    field(CALC, "A")
+}
+
+## The calcout outputs the hexadecimal character into $(P)STAT:HEX:$(INDEX).
+## As a hexadecimal character is made from 4 bits, we can access these
+## bits individually using the mbbiDirect record.
+## 
+## This is because we individual bits in the hexadecimal character
+## correspond to different states of the device, e.g. on or off,
+## mode it's running in, faults.
+
+record(mbbiDirect, "$(P)STAT:HEX:$(INDEX)") {
+    field(DESC, "Gets hexadecimal character number $(INDEX)")
+    field(DTYP, "Soft Channel")
+    field(INP, "$(P)STAT:HEX:$(INDEX):RAW.A CP MS")
+    field(NOBT, "4")
+    
+    field(SIML, "$(P)SIM")
+	
+    info(archive, "VAL")
+    info(INTEREST, "LOW")
+    field(SDIS, "$(P)DISABLE")
+}
+

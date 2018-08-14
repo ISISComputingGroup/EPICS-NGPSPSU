@@ -1,0 +1,183 @@
+################################
+### Records for NGPS PSU IOC ###
+################################
+
+
+# Misc Records
+
+record(bo, "$(P)DISABLE"){
+    field(DESC, "Disable comms")
+    field(PINI, "YES")
+    field(VAL, "$(DISABLE=0)")
+    field(OMSL, "supervisory")
+    field(ZNAM, "COMMS ENABLED")
+    field(ONAM, "COMMS DISABLED")
+}
+
+record (stringin, "$(P)VERSION"){
+	field(DESC, "Model number and firmware version")
+    field(DTYP, "stream")
+	field(INP,  "@ngpspsu.proto get_version($(P)) $(PORT)")
+	
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VERSION")
+	field(SDIS, "$(P)DISABLE")
+}
+
+# Power records
+
+record (bo, "$(P)POWER:SP"){
+    field(DESC, "Power setpoint")
+    field(DTYP, "Soft Channel")
+    field(FLNK, "$(P)POWER:SP:_SEND_IF_OK")
+    
+    field(ZNAM, "OFF")
+	field(ONAM, "ON")
+     
+    info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record (calcout, "$(P)POWER:SP:_SEND_IF_OK"){
+    field(DESC, "Checks if power is on or off")
+    field(INPA, "$(P)POWER:SP")
+    field(INPB, "$(P)STAT:POWER")
+	
+    field(CALC, "A!=B") # Prevents resending a setpoint if that setpoint was already set.
+	field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "A")
+	field(OUT, "$(P)POWER:SP:RAW CA PP")
+}
+
+record (bo, "$(P)POWER:SP:RAW"){
+    field(DESC, "Raw power setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@ngpspsu.proto power($(P)) $(PORT)")
+    
+    info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    field(SDIS, "$(P)DISABLE")
+}
+
+# Reset records
+
+record (bo, "$(P)RESET:SP"){
+    field(DESC, "Resets the device")
+    field(DTYP, "stream")
+    field(OUT,  "@ngpspsu.proto reset($(P)) $(PORT)")
+    field(FLNK, "$(P)_COPIER")
+    
+    info(archive, "VAL")
+    info(INTEREST, "MEDIUM")
+    
+    field(SDIS, "$(P)DISABLE")
+}
+
+## These records copy an empty string to the ERROR PV
+## when reset is activated.
+
+record(scalcout, "$(P)_COPIER"){
+    field(DESC, "Copies string to ERROR PV")
+    field(INAA, "$(P)_EMPTY")
+    field(CALC, "AA")
+    field(OOPT, "Every Time")
+    field(OUT, "$(P)ERROR")
+}
+
+record(stringout, "$(P)_EMPTY"){
+    field(DESC, "Empty string to be copied")
+    field(DTYP, "Soft Channel")
+    field(PINI, "YES")
+    field(VAL, "No error")   
+}
+
+# Status records  
+
+record(stringin, "$(P)STAT"){
+    field(DESC, "Reads the status of the device.")
+    field(SCAN, "1 second")
+    field(INP, "@ngpspsu.proto read_status($(P)) $(PORT)")
+    field(DTYP, "stream")
+      
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)STAT:POWER") {
+	field(DESC, "Power status")
+	field(INP, "$(P)STAT:HEX:1.B0 CP MS")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+    
+    info(archive, "VAL")
+	info(INTEREST, "MEDIUM")
+    field(SDIS, "$(P)DISABLE")
+}
+
+#
+# All Status Hex character PVs can be found in status_hex.db
+#
+
+# Fault records
+
+record(calcout, "$(P)STAT:FAULT:_CALC") {
+    field(DESC, "Calculates if there's a fault")
+    field(INPA, "$(P)STAT:HEX:1.B1 CP MS")
+    field(INPB, "$(P)STAT:HEX:6.B1 CP MS")
+    field(INPC, "$(P)STAT:HEX:6.B2 CP MS")
+    field(INPD, "$(P)STAT:HEX:6.B3 CP MS")
+    field(INPE, "$(P)STAT:HEX:7.B0 CP MS")
+    field(INPF, "$(P)STAT:HEX:8.B2 CP MS")
+    field(CALC, "A||B||C||D||E||F")
+    field(OOPT, "On Change")
+}
+
+
+record(bi, "$(P)STAT:FAULT") {
+	field(DESC, "Fault status")
+    field(DTYP, "Soft Channel")
+    field(INP, "$(P)STAT:FAULT:_CALC CP MS")
+	
+    field(ZNAM, "No fault")
+	field(ZSV, "NO_ALARM")
+    
+    field(ONAM, "Fault")
+    field(OSV, "MAJOR")
+    
+	info(INTEREST, "LOW")
+    info(ALARM, "NGPSPSU")
+    field(SDIS, "$(P)DISABLE")
+}
+
+# Error records
+
+record(stringin, "$(P)ERROR") {
+	field(DESC, "Catches error codes.")
+    field(DTYP, "Soft Channel")
+    field(SCAN, ".1 second") # Not processed by mismatch handler (uses redirection)
+    field(PINI, "YES")
+    field(VAL, "No error")
+        
+	info(INTEREST, "LOW")
+    info(ALARM, "NGPSPSU")
+    field(SDIS, "$(P)DISABLE")
+}
+
+### Simulated records
+
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
+record(stringout, "$(P)SIM:VERSION")
+{
+	field(VAL, "NGPS 100-50:0.9.01")
+	field(PINI, "YES")
+}
