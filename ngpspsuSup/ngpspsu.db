@@ -115,6 +115,9 @@ record(bi, "$(P)STAT:POWER") {
     field(SDIS, "$(P)DISABLE")
 }
 
+alias("$(P)STAT:POWER", "$(P)POWER")
+alias("$(P)STAT:POWER", "$(P)POWER:RBV")
+
 #
 # All Status Hex character PVs can be found in status_hex.db
 #
